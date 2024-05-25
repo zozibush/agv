@@ -1,3 +1,4 @@
 [submodule "aruco_gazebo"]
 	path = aruco_gazebo
 	url = https://github.com/zozibush/aruco_gazebo
+	branch = master
