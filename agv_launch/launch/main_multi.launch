@@ -47,6 +47,15 @@
     <arg name="initial_pose_a" default="0.0"/>
   </include>
 
+  <!--- Run Move Base -->
+  <include file="$(find agv_launch)/launch/single_move_base.launch">
+    <arg name="set_base_frame" value="$(arg robot_name1)/base_footprint"/>
+    <arg name="set_odom_frame" value="$(arg robot_name1)/odom"/>
+    <arg name="set_scan_frame" value="$(arg robot_name1)/laser"/>
+    <arg name="set_map_frame" value="$(arg set_map_frame)"/>
+    <arg name="set_robot_name" value="$(arg robot_name1)"/>
+  </include>
+
   <!-- Run rviz -->
   <include file="$(find agv_simulation)/launch/agv_rviz.launch" />
 
