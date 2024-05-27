@@ -11,7 +11,9 @@
 
   <!-- Run the map server -->
   <arg name="map_file" default="$(find agv_navigation)/map/map.yaml"/>
-  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+    <param name="frame_id" value="$(arg set_map_frame)"/>
+  </node>
 
   <!-- Spawn Robot -->
   <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
