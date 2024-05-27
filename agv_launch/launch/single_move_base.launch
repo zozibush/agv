@@ -1,0 +1,44 @@
+<?xml version="1.0"?>
+<launch>
+    <arg name="set_robot_name"  default="AGV_OTA"/>
+
+	<!-- amcl Arguments -->
+	<arg name="set_base_frame" default="base_footprint"/>
+	<arg name="set_odom_frame" default="odom"/>
+	<arg name="set_scan_frame" default="laser"/>
+	<arg name="set_map_frame"  default="map"/>
+
+	<!-- move_base Arguments -->
+	<arg name="cmd_vel_topic" default="cmd_vel" />
+	<arg name="odom_topic" default="odom" />
+
+    <arg name="base_global_planner" default="global_planner/GlobalPlanner"/>
+    <arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS"/>
+
+    <!--- Run Move Base -->
+    <group ns="$(arg set_robot_name)">
+        <node pkg="move_base" type="move_base" respawn="false" name="move_base" output="screen" >
+            <param name="base_global_planner" value="$(arg base_global_planner)"/>
+            <param name="base_local_planner" value="$(arg base_local_planner)"/>
+            <rosparam file="$(find agv_navigation)/params/agv_move_base.yaml" command="load"/>
+            <rosparam file="$(find agv_navigation)/params/agv_common.yaml" command="load" ns="global_costmap"/>
+            <rosparam file="$(find agv_navigation)/params/agv_common.yaml" command="load" ns="local_costmap"/>
+            <rosparam file="$(find agv_navigation)/params/agv_local.yaml" command="load" />
+            <rosparam file="$(find agv_navigation)/params/agv_global.yaml" command="load" />
+            <rosparam file="$(find agv_navigation)/params/agv_base_local.yaml" command="load" />
+
+            <param name="local_costmap/scan/sensor_frame"   value="$(arg set_scan_frame)"/>
+            <param name="local_costmap/global_frame"        value="$(arg set_odom_frame)"/>
+            <param name="local_costmap/robot_base_frame"    value="$(arg set_base_frame)"/>
+            <param name="global_costmap/scan/sensor_frame"  value="$(arg set_scan_frame)"/>
+            <param name="global_costmap/global_frame"       value="$(arg set_map_frame)"/>
+            <param name="global_costmap/robot_base_frame"   value="$(arg set_base_frame)"/>
+
+            <remap from="cmd_vel" to="$(arg cmd_vel_topic)"/>
+            <remap from="odom" to="$(arg odom_topic)"/>
+            <remap from="map" to="/map"/>
+
+        </node>
+    </group>
+</launch>
+
