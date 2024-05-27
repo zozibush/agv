@@ -8,4 +8,24 @@
     <arg name="world_name" value="$(find agv_simulation)/worlds/map_depo.world"/>
   </include>
 
+  <!-- Spawn Robot -->
+  <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
+    <arg name="robot_name" default="AGV_OTA1"/>
+    <arg name="initial_pose_x" default="0"/>
+    <arg name="initial_pose_y" default="0"/>
+    <arg name="initial_pose_z" default="0"/>
+  </include>
+  <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
+    <arg name="robot_name" default="AGV_OTA2"/>
+    <arg name="initial_pose_x" default="10"/>
+    <arg name="initial_pose_y" default="0"/>
+    <arg name="initial_pose_z" default="0"/>
+  </include>
+  <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
+    <arg name="robot_name" default="AGV_OTA3"/>
+    <arg name="initial_pose_x" default="15"/>
+    <arg name="initial_pose_y" default="0"/>
+    <arg name="initial_pose_z" default="0"/>
+  </include>
+
 </launch>
