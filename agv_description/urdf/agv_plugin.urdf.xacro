@@ -31,7 +31,7 @@
         <odometryTopic>odom</odometryTopic>
         <odometryFrame>odom</odometryFrame>
         <odometrySource>world</odometrySource>
-        <robotBaseFrame>base_link</robotBaseFrame>
+        <robotBaseFrame>base_footprint</robotBaseFrame>
 	      <legacyMode>true</legacyMode>
 	      <publishTf>true</publishTf>
         <updateRate>150.0</updateRate>
