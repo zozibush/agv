@@ -9,6 +9,10 @@
     <arg name="world_name" value="$(find agv_simulation)/worlds/map_depo.world"/>
   </include>
 
+  <!-- Run the map server -->
+  <arg name="map_file" default="$(find agv_navigation)/map/map.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)" />
+
   <!-- Spawn Robot -->
   <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
     <arg name="robot_name" default="$(arg robot_name1)"/>
