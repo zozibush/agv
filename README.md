@@ -9,16 +9,6 @@ This repository includes the AGV ROS Noetic packages."main" branch is latest ver
 - agv_navigation: It is a sub-package containing the navigation launch and config files.
 - (NEW) agv_multirobot: It is a sub-package containing the AGV-OTA multirobot application files.
 
-
-### For other AGV ROS Packages:
-https://github.com/inomuh/agvpc_ros
-
-https://github.com/inomuh/agvsim_v1_ros
-
-https://github.com/inomuh/agvpc_ros2
-
-https://github.com/inomuh/agvsim_v2_ros
-
 Launch Command:
 ---------------
 ### Warning !!!
@@ -27,27 +17,7 @@ Before using launch commands, you must unzip ~/agv/agv_description/meshes/OTAv07
 -------------------------------------------------------------------------------------------------------------
 Gazebo Launching:
 
-    $ roslaunch agv_simulation agv_gazebo_emptyworld.launch
-
-Gazebo (Depo Map) Launching:
-
-    $ roslaunch agv_simulation agv_gazebo_depo.launch
-
-Solo-Rviz Launching:
-
-    $ roslaunch agv_simulation agv_rviz_standalone.launch
-    
-Rviz (with Gazebo) Launching:
-
-    $ roslaunch agv_simulation agv_rviz.launch
-    
-SLAM Mapping Launching (must work with Gazebo and RViz Launching):
-
-    $ roslaunch agv_slam agv_slam.launch
-    
-Navigation Launching:
-
-    $ roslaunch agv_navigation agv_navigation.launch
+    $ roslaunch agv_launch main_multi.launch
 
 
 ![Image of AGV Navigation](https://github.com/inomuh/agv/blob/main/images/agv_nav_goal.png)
