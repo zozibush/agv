@@ -31,7 +31,7 @@
     <arg name="initial_pose_z" default="0"/>
   </include>
   <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
-    <arg name="robot_name" default="$(arg robot_name2)"/>
+    <arg name="robot_name" default="$(arg robot_name3)"/>
     <arg name="initial_pose_x" default="15"/>
     <arg name="initial_pose_y" default="0"/>
     <arg name="initial_pose_z" default="0"/>
