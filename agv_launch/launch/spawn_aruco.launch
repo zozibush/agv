@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<launch>
+	<arg name="marker_id" default="0"/>
+    <arg name="x" default="0"/>
+    <arg name="y" default="0"/>
+    <arg name="z" default="0"/>
+    <arg name="R" default="0"/>
+    <arg name="P" default="0"/>
+    <arg name="Y" default="0"/>
+    <arg name="use_pad" default="false" />
+
+    <group if="$(arg use_pad)" ns="spawn_marker_$(arg marker_id)_pad">
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_sdf" output="screen"
+            args="-file $(find aruco_gazebo)/aruco_visual_marker_$(arg marker_id)_pad/model.sdf -sdf -model aruco_$(arg marker_id)_pad -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)" />
+    </group>
+    <group unless="$(arg use_pad)" ns="spawn_marker_$(arg marker_id)">
+        <node pkg="gazebo_ros" type="spawn_model" name="spawn_sdf" output="screen"
+            args="-file $(find aruco_gazebo)/aruco_visual_marker_$(arg marker_id)/model.sdf -sdf -model aruco_$(arg marker_id) -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)" />
+    </group>
+</launch>
