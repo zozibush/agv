@@ -1,0 +1,64 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="set_map_frame" default="map"/>
+  <arg name="robot_name1" default="AGV_OTA1"/>
+  <arg name="robot_name2" default="AGV_OTA2"/>
+  <arg name="robot_name3" default="AGV_OTA3"/>
+
+  <!-- Run Gazebo -->
+  <include file="$(find agv_launch)/launch/gazebo.launch">
+    <arg name="world_name" value="$(find agv_simulation)/worlds/map_depo.world"/>
+  </include>
+
+  <!-- Run the map server -->
+  <arg name="map_file" default="$(find agv_navigation)/map/map.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+    <param name="frame_id" value="$(arg set_map_frame)"/>
+  </node>
+
+  <!-- Spawn Robot -->
+  <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
+    <arg name="robot_name" default="$(arg robot_name1)"/>
+    <arg name="initial_pose_x" default="0"/>
+    <arg name="initial_pose_y" default="0"/>
+    <arg name="initial_pose_z" default="0"/>
+  </include>
+  <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
+    <arg name="robot_name" default="$(arg robot_name2)"/>
+    <arg name="initial_pose_x" default="10"/>
+    <arg name="initial_pose_y" default="0"/>
+    <arg name="initial_pose_z" default="0"/>
+  </include>
+  <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
+    <arg name="robot_name" default="$(arg robot_name2)"/>
+    <arg name="initial_pose_x" default="15"/>
+    <arg name="initial_pose_y" default="0"/>
+    <arg name="initial_pose_z" default="0"/>
+  </include>
+
+  <!-- Run AMCL -->
+  <include file="$(find agv_launch)/launch/single_amcl.launch">
+    <arg name="set_base_frame" value="$(arg robot_name1)/base_footprint"/>
+    <arg name="set_odom_frame" value="$(arg robot_name1)/odom"/>
+    <arg name="set_scan_frame" value="$(arg robot_name1)/scan_link"/>
+    <arg name="set_map_frame" value="$(arg set_map_frame)"/>
+    <arg name="set_robot_name" value="$(arg robot_name1)"/>
+    <arg name="initial_pose_x" default="0.0"/>
+    <arg name="initial_pose_y" default="0.0"/>
+    <arg name="initial_pose_a" default="0.0"/>
+  </include>
+
+  <!--- Run Move Base -->
+  <include file="$(find agv_launch)/launch/single_move_base.launch">
+    <arg name="set_base_frame" value="$(arg robot_name1)/base_footprint"/>
+    <arg name="set_odom_frame" value="$(arg robot_name1)/odom"/>
+    <arg name="set_scan_frame" value="$(arg robot_name1)/laser"/>
+    <arg name="set_map_frame" value="$(arg set_map_frame)"/>
+    <arg name="set_robot_name" value="$(arg robot_name1)"/>
+  </include>
+
+  <!-- Run rviz -->
+  <include file="$(find agv_simulation)/launch/agv_rviz.launch" />
+
+</launch>
