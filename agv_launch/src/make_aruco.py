@@ -6,7 +6,7 @@ import numpy as np
 if __name__ == "__main__":
     board_type = cv2.aruco.DICT_6X6_250
     MARKER_SIZE = 400
-    id_info = 1
+    id_info = 0
     NEW_SIZE = (1778, 1778)
 
     arucoDict = cv2.aruco.getPredefinedDictionary(board_type)
