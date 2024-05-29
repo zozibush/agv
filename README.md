@@ -48,6 +48,9 @@ Requirements:
 - In order for the multirobot applications to work properly, "robot_state_publisher" package must be downloaded to your workspace.
         
         $ cd ~/catkin_ws/src && git clone https://github.com/rhaschke/robot_state_publisher -b noetic-devel
+- submodule update
+        
+        $ git submodule update --init --recursive
         
 -------------------------------------------------------------------------------
 Changelog:
