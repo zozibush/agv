@@ -19,6 +19,9 @@ Before using launch commands, you must unzip ~/agv/agv_description/meshes/OTAv07
 Gazebo Launching:
 
     $ roslaunch agv_launch main_multi.launch
+ArUco Spawn:
+
+    $ roslaunch agv_launch spawn_aruco.launch marker_id:=0 x:=0 y:=0 z:=0 P:=0 R:=0 Y:=0
 
 
 ![Image of AGV Navigation](https://github.com/inomuh/agv/blob/main/images/agv_nav_goal.png)
