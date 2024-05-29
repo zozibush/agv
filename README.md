@@ -8,6 +8,7 @@ This repository includes the AGV ROS Noetic packages."main" branch is latest ver
 - agv_slam: It is a sub-package containing the slam_gmapping launch files.
 - agv_navigation: It is a sub-package containing the navigation launch and config files.
 - (NEW) agv_multirobot: It is a sub-package containing the AGV-OTA multirobot application files.
+- (zozibush) agv_launch: It is a sub-package for launching multirobot
 
 Launch Command:
 ---------------
