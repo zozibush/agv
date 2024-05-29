@@ -1,6 +1,8 @@
 <?xml version="1.0"?>
 
 <launch>
+  <env name="GAZEBO_MODEL_PATH" value="$(find aruco_gazebo):$(optenv GAZEBO_MODEL_PATH)" />
+
   <arg name="set_map_frame" default="map"/>
   <arg name="robot_name1" default="AGV_OTA1"/>
   <arg name="robot_name2" default="AGV_OTA2"/>
