@@ -9,7 +9,7 @@
   <arg name="robot_name3" default="AGV_OTA3"/>
 
   <!-- Run Gazebo -->
-  <include file="$(find agv_launch)/launch/gazebo.launch">
+  <include file="$(find agv_launch)/launch/run_gazebo.launch">
     <arg name="world_name" value="$(find agv_simulation)/worlds/map_depo.world"/>
   </include>
 
@@ -61,6 +61,8 @@
   </include>
 
   <!-- Run rviz -->
-  <include file="$(find agv_simulation)/launch/agv_rviz.launch" />
+  <include file="$(find agv_launch)/launch/run_rviz.launch">
+    <arg name="rviz" default="$(find agv_simulation)/rviz/urdf.rviz"/>
+  </include>
 
 </launch>
