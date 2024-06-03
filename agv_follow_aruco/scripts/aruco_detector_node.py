@@ -17,19 +17,10 @@ class ArucoDetectFollower(object):
         self.cmd_vel_pub = rospy.Publisher("/AGV_OTA1/cmd_vel", Twist, queue_size = 1)
 
         # Subscribe to camera messages
-        self.image_sub     = rospy.Subscriber("/AGV_OTA1/camera/image_raw/compressed", CompressedImage, self.camera_callback)
-
-        self.counter = 1
-        self.finish = False
+        self.image_sub = rospy.Subscriber(f"/{self.robot_name}/camera/image_raw/compressed", CompressedImage, self.camera_callback)
 
     # Main Callback Function
     def camera_callback(self, data):
-        # Dividing frame rate by 3 (10fps)
-        # if self.counter % 3 != 0:
-        #     self.counter += 1
-        #     return
-        # else:
-        #     self.counter = 1
 
         try:
             #### direct conversion to CV2 ####
