@@ -16,7 +16,7 @@ class ArucoDetection(object):
         self.dist_coeffs = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
         self.aruco_size = 0.1778 # (m)
 
-    def processImage(self, input_image):
+    def detectMarkers(self, input_image):
         # 이미지에서 ArUco 마커를 감지
         corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(input_image, self.aruco_dict, parameters=self.parameters)
 
