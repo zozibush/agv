@@ -8,13 +8,13 @@ class ArucoDetection(object):
 
     def __init__(self):
         self.draw_img = True
-        self.check_fps = True
-        self.scale_percent = 40
 
-        # ArUco의 사전을 선택
+        # ArUco info
         self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
-        # ArUco의 파라미터를 기본값으로 설정
         self.parameters = cv2.aruco.DetectorParameters()
+        self.camera_matrix = np.array([[381.36246688113556, 0, 320.5], [0, 381.36246688113556, 240.5], [0, 0, 1]])
+        self.dist_coeffs = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
+        self.aruco_size = 0.1778 # (m)
 
     def processImage(self, input_image):
         # 이미지에서 ArUco 마커를 감지
