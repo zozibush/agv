@@ -7,6 +7,7 @@ import numpy as np
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import CompressedImage
 from aruco_detection import ArucoDetection
+import PIDController
 
 class ArucoDetectFollower(object):
 
