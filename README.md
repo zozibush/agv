@@ -10,6 +10,7 @@ This repository includes the AGV ROS Noetic packages."main" branch is latest ver
 - (NEW) agv_multirobot: It is a sub-package containing the AGV-OTA multirobot application files.
 - (zozibush) agv_launch: It is a sub-package for launching multirobot
 - (zozibush) agv_follow_lane : It's a sub-package for follow lane
+- (zozibush) agv_follow_aruco : It's a sub-package for follow aruco
 
 Launch Command:
 ---------------
@@ -26,6 +27,10 @@ ArUco Spawn:
 follow_lane:
 
     $ roslaunch agv_follow_lane follow_lane.launch
+follow_aruco:
+
+    $ roslaunch agv_follow_aruco follow_aruco.launch
+
 
 ![Image of AGV Navigation](https://github.com/inomuh/agv/blob/main/images/agv_nav_goal.png)
     
