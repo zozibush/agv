@@ -21,15 +21,18 @@ class ArucoDetection(object):
         corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(input_image, self.aruco_dict, parameters=self.parameters)
 
         # 감지한 ArUco 마커를 그림
-        final_img = cv2.aruco.drawDetectedMarkers(input_image.copy(), corners, ids)
-        return ids, final_img
+        final_img = None
+        if self.draw_img:
+            final_img = cv2.aruco.drawDetectedMarkers(input_image.copy(), corners, ids)
 
+        return corners, ids, final_img
 
-    def resize_img(self, img, scale_percent):
-        width = int(img.shape[1]*scale_percent/100)
-        height = int(img.shape[0]*scale_percent/100)
-        dim = (width, height)
-        resized_img = cv2.resize(img, dim, interpolation=cv2.INTER_AREA)
+    def estimatePoseSingleMarkers(self, corners, input_image):
+        # Estimate pose of each marker
+        rvec, tvec, _objPoints = cv2.aruco.estimatePoseSingleMarkers(corners, self.aruco_size, self.camera_matrix, self.dist_coeffs)
 
-        resized_img = resized_img[75:,:]
-        return resized_img
+        final_img = None
+        if self.draw_img:
+            final_img = cv2.drawFrameAxes(input_image.copy(), self.camera_matrix, self.dist_coeffs, rvec, tvec, 0.3)
+
+        return rvec, tvec, final_img
