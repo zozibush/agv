@@ -37,15 +37,6 @@
     <arg name="initial_pose_a" default="0.0"/>
   </include>
 
-  <!--- Run Move Base -->
-  <include file="$(find agv_launch)/launch/single_move_base.launch">
-    <arg name="set_base_frame" value="$(arg robot_name1)/base_footprint"/>
-    <arg name="set_odom_frame" value="$(arg robot_name1)/odom"/>
-    <arg name="set_scan_frame" value="$(arg robot_name1)/laser"/>
-    <arg name="set_map_frame" value="$(arg set_map_frame)"/>
-    <arg name="set_robot_name" value="$(arg robot_name1)"/>
-  </include>
-
   <!-- Run rviz -->
   <include file="$(find agv_launch)/launch/run_rviz.launch">
     <arg name="rviz" default="$(find agv_simulation)/rviz/urdf.rviz"/>
@@ -54,9 +45,9 @@
   <!-- Spawn aruco -->
   <include file="$(find agv_follow_aruco)/launch/spawn_aruco.launch">
     <arg name="marker_id" default="0"/>
-    <arg name="x" value="4"/>
+    <arg name="x" value="3"/>
     <arg name="y" value="0"/>
-    <arg name="z" value="0.02"/>
+    <arg name="z" value="0.01"/>
     <arg name="R" value="0"/>
     <arg name="P" value="0"/>
     <arg name="Y" value="0"/>
