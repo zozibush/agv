@@ -13,8 +13,29 @@ class ArucoDetectFollower(object):
 
     def __init__(self):
 
+        self.robot_name = rospy.get_param("robot_name", "AGV_OTA1")
+
+        self.connect()
+
+        # PID Controller
+        self.Kp = 0.1
+        self.Ki = 0.00001
+        self.Kd = 0.05
+        self.pid_x = PIDController.PID(self.Kp, self.Ki, self.Kd)
+
+        self.find_aruco = None
+
+        # how far is the robot from the aruco marker
+        self.far_linear_x = 1 # (m)
+
+        # Create ArUco detection object
+        self.detection = ArucoDetection()
+
+        self.default_speed = 0.1
+
+    def connect(self):
         # Publisher for twist messages
-        self.cmd_vel_pub = rospy.Publisher("/AGV_OTA1/cmd_vel", Twist, queue_size = 1)
+        self.cmd_vel_pub = rospy.Publisher(f"/{self.robot_name}/cmd_vel", Twist, queue_size = 1)
 
         # Subscribe to camera messages
         self.image_sub = rospy.Subscriber(f"/{self.robot_name}/camera/image_raw/compressed", CompressedImage, self.camera_callback)
@@ -30,19 +51,28 @@ class ArucoDetectFollower(object):
         except:
             print("Error conversion to CV2")
 
-        # Undistorted image
-        # undist = cv2.undistort(cv_image, self.mtx, self.dist, None, self.mtx)
-
-        # Create lane detection object
-        aruco_detection_object = ArucoDetection()
-
         # Lane lines detection and process cross track error
-        ids, final_img = aruco_detection_object.processImage(cv_image)
+        corners, ids, final_img = self.detection.detectMarkers(cv_image)
 
         cmd_vel = Twist()
-        cmd_vel.linear.x = 0 if ids is not None else 0.2
-        if not self.finish:
-            self.finish = True if ids is not None else False
+
+        if self.find_aruco is not None or ids is not None:
+            if ids is not None:
+                self.find_aruco = {"id":ids[0][0], "corners": corners}
+
+            # estimate aruco marker position
+            rvec, tvec, final_img =self.detection.estimatePoseSingleMarkers(self.find_aruco["corners"], final_img)
+
+            (rvec - tvec).any()
+            tvec = tvec[0][0]
+            tvec = [tvec[2], tvec[1], -tvec[0]] # transform (z, y, x) to (x, y, z)
+
+            # PID
+            cmd_vel.linear.x = -self.pid_x.compute(self.far_linear_x, tvec[0])
+
+        else:
+            cmd_vel.linear.x = self.default_speed
+
         self.cmd_vel_pub.publish(cmd_vel)
 
         if self.detection.draw_img:
