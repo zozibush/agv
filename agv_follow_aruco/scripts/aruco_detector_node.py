@@ -45,12 +45,9 @@ class ArucoDetectFollower(object):
             self.finish = True if ids is not None else False
         self.cmd_vel_pub.publish(cmd_vel)
 
-        # if not self.finish:
-        #     self.cmd_vel_pub.publish(cmd_vel)
-        # else:
-        #     self.cmd_vel_pub.publish(Twist())
-
-        if aruco_detection_object.draw_img:
+        if self.detection.draw_img:
+            cv2.putText(final_img, f"robot_vel_x: {cmd_vel.linear.x:.6f}", (130,25), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0,0,255), 1)
+            cv2.putText(final_img, f"distance: {-self.pid_x.prev_error:.6f}", (130,50), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0,0,255), 1)
             cv2.imshow("Original Image", final_img)
             cv2.waitKey(1)
 
