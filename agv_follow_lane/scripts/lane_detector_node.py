@@ -12,11 +12,9 @@ class LaneDetectFollower(object):
 
     def __init__(self):
 
-        # Publisher for twist messages
-        self.cmd_vel_pub = rospy.Publisher("/AGV_OTA1/cmd_vel", Twist, queue_size = 1)
+        self.robot_name = rospy.get_param("robot_name", "AGV_OTA1")
 
-        # Subscribe to camera messages
-        self.image_sub     = rospy.Subscriber("/AGV_OTA1/camera/image_raw/compressed", CompressedImage, self.camera_callback)
+        self.connect()
 
         self.Kp = 0.001
         self.Ki = 0
@@ -29,6 +27,13 @@ class LaneDetectFollower(object):
         self.angle_const = 0.01
 
         self.counter = 1
+
+    def connect(self):
+        # Publisher for twist messages
+        self.cmd_vel_pub = rospy.Publisher(f"/{self.robot_name}/cmd_vel", Twist, queue_size = 1)
+
+        # Subscribe to camera messages
+        self.image_sub = rospy.Subscriber(f"/{self.robot_name}/camera/image_raw/compressed", CompressedImage, self.camera_callback)
 
     # Main Callback Function
     def camera_callback(self, data):
