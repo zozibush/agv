@@ -54,6 +54,8 @@
   </include>
 
   <!-- Run follow_aruco scripts -->
-  <node pkg="agv_follow_aruco" type="aruco_detector_node.py" name="aruco_detect_follower_node" output="screen"></node>
+  <node pkg="agv_follow_aruco" type="aruco_detector_node.py" name="aruco_detect_follower_node" output="screen">
+    <param name="robot_name" value="$(arg robot_name1)"/>
+  </node>
 
 </launch>
