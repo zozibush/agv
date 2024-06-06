@@ -10,6 +10,7 @@ This repository includes the AGV ROS Noetic packages."main" branch is latest ver
 - (zozibush) agv_launch: It is a sub-package for launching multirobot
 - (zozibush) agv_follow_lane : It's a sub-package for follow lane
 - (zozibush) agv_follow_aruco : It's a sub-package for follow aruco
+- (zozibush) agv_control : It's a sub-package for control agv to drive
 
 ## Launch Command
 
@@ -30,6 +31,9 @@ follow_lane:
 follow_aruco:
 
     roslaunch agv_follow_aruco follow_aruco.launch
+driving agv(with publishing 'robot_name/control' topic):
+
+    roslaunch agv_control agv_control.launch
 
 -----------------------------------------------------------------------------------------------------------------------
 ### Requirements:
