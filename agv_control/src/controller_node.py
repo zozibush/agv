@@ -20,6 +20,7 @@ class AGVController:
 
         self.type = -1
         self.epsilon = 5e-2
+        self.pause = False
 
         self.detection = Detection()
         self.pid_aruco = PID(0.1, 0.00001, 0.05)
