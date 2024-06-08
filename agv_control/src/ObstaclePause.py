@@ -8,6 +8,7 @@ class ObstaclePause:
     def __init__(self):
         self.robot_name = rospy.get_param("robot_name", "AGV_OTA1")
         self.max_range = float('inf')
+        self.sensors = 8
         self.ranges = [self.max_range for _ in range(self.sensors)]
         self.start_time = rospy.get_time()
         self.min_range_above_threshold = False
