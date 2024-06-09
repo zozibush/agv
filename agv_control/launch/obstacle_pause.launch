@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+
+<launch>
+  <arg name="robot_name1" default="AGV_OTA1"/>
+
+  <include file="$(find agv_control)/launch/agv_control.launch">
+    <arg name="robot_name1" default="AGV_OTA1"/>
+  </include>
+
+  <!-- Run Obstacle Pause -->
+  <group ns="$(arg robot_name1)">
+    <node pkg="agv_control" type="ObstaclePause.py" name="obstacle_pause_node" output="screen">
+      <param name="robot_name" value="$(arg robot_name1)"/>
+    </node>
+  </group>
+
+</launch>

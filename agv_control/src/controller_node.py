@@ -5,6 +5,7 @@ import cv2
 import numpy as np
 from geometry_msgs.msg import Twist
 from sensor_msgs.msg import CompressedImage
+from std_msgs.msg import Bool
 from agv_control.msg import Control
 from PIDController import PID
 from Detection import Detection
@@ -19,6 +20,7 @@ class AGVController:
 
         self.type = -1
         self.epsilon = 5e-2
+        self.pause = False
 
         self.detection = Detection()
         self.pid_aruco = PID(0.1, 0.00001, 0.05)
@@ -46,8 +48,13 @@ class AGVController:
         # Subscriber
         self.image_sub = rospy.Subscriber(f"/{self.robot_name}/camera/image_raw/compressed", CompressedImage, self.camera_callback)
         self.control_sub = rospy.Subscriber(f"/{self.robot_name}/control", Control, self.control_callback)
+        self.pause_sub = rospy.Subscriber(f"/{self.robot_name}/pause", Bool, self.pause_callback)
+
+    def pause_callback(self, data):
+        self.pause = data.data
 
     def camera_callback(self, data):
+
         # Dividing frame rate by 3 (10fps)
         if self.counter % 3 != 0:
             self.counter += 1
@@ -56,7 +63,7 @@ class AGVController:
             self.counter = 1
 
         cmd_vel = Twist()
-        if self.type == -1:
+        if self.type == -1 or self.pause:
             self.cmd_vel_pub.publish(cmd_vel)
             return
         try:
