@@ -23,7 +23,7 @@
         <alwaysOn>true</alwaysOn>
         <leftJoint>wheel_right_base</leftJoint>
         <rightJoint>wheel_left_base</rightJoint>
-        <wheelSeparation>0.60</wheelSeparation>
+        <wheelSeparation>1.02</wheelSeparation>
         <wheelDiameter>0.20</wheelDiameter>
         <wheelTorque>20</wheelTorque>
         <wheelAcceleration>1.8</wheelAcceleration>
