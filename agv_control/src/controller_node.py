@@ -24,7 +24,7 @@ class AGVController:
 
         self.detection = Detection()
         self.pid_aruco = PID(0.1, 0.00001, 0.05)
-        self.pid_lane = PID(0.001, 0.0, 0.01)
+        self.pid_lane = PID(0.0005, 0.0, 0.005)
 
         self.default_speed = 0.1
 
