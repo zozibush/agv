@@ -117,7 +117,7 @@ class AGVController:
             if cte is not None and angle is not None:
                 angular_z = self.pid_lane.compute(cte)
             else:
-                angular_z = self.pid_lane.Kp * self.pid_lane.last_cte * 1.9
+                angular_z = self.pid_lane.Kp * self.pid_lane.last_error * 1.9
 
             angular_z = max(angular_z, -2.0) if angular_z < 0 else min(angular_z, 2.0)
             cmd_vel.linear.x = self.default_speed
