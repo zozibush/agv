@@ -24,7 +24,7 @@ class AGVController:
 
         self.detection = Detection()
         self.pid_aruco = PID(0.1, 0.00001, 0.05)
-        self.pid_lane = PID(0.001, 0.0, 0.01)
+        self.pid_lane = PID(0.0005, 0.0, 0.005)
 
         self.default_speed = 0.1
 
@@ -117,7 +117,7 @@ class AGVController:
             if cte is not None and angle is not None:
                 angular_z = self.pid_lane.compute(cte)
             else:
-                angular_z = self.pid_lane.Kp * self.pid_lane.last_cte * 1.9
+                angular_z = self.pid_lane.Kp * self.pid_lane.last_error * 1.9
 
             angular_z = max(angular_z, -2.0) if angular_z < 0 else min(angular_z, 2.0)
             cmd_vel.linear.x = self.default_speed
@@ -144,6 +144,15 @@ class AGVController:
 
     def clean_up(self):
         cv2.destroyAllWindows()
+
+    def move(self, x = 0, z = 0):
+        cmd_vel = Twist()
+        cmd_vel.linear.x = x
+        cmd_vel.angular.z = z
+        self.cmd_vel_pub.publish(cmd_vel)
+
+    def turn(self, angle):
+        self.move(0, angle)
 
 def main():
 
