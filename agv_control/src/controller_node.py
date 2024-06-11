@@ -145,6 +145,15 @@ class AGVController:
     def clean_up(self):
         cv2.destroyAllWindows()
 
+    def move(self, x = 0, z = 0):
+        cmd_vel = Twist()
+        cmd_vel.linear.x = x
+        cmd_vel.angular.z = z
+        self.cmd_vel_pub.publish(cmd_vel)
+
+    def turn(self, angle):
+        self.move(0, angle)
+
 def main():
 
     rospy.init_node("agv_controller_node", anonymous=True)
