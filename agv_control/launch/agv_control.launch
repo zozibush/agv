@@ -8,7 +8,7 @@
 
   <!-- Run Gazebo -->
   <include file="$(find agv_launch)/launch/run_gazebo.launch">
-    <arg name="world_name" value="$(find agv_follow_lane)/worlds/lane_ground.world"/>
+    <arg name="world_name" value="$(find agv_follow_lane)/worlds/lane_intersection.world"/>
   </include>
 
   <!-- Run the map server -->
