@@ -5,14 +5,14 @@ import numpy as np
 
 if __name__ == "__main__":
     board_type = cv2.aruco.DICT_6X6_250
-    MARKER_SIZE = 400
-    id_info = 0
-    NEW_SIZE = (1778, 1778)
+    MARKER_SIZE = 100
 
     arucoDict = cv2.aruco.getPredefinedDictionary(board_type)
-    aruco_marker_img = cv2.aruco.generateImageMarker(arucoDict, id_info, MARKER_SIZE)
 
-    aruco_marker_img_resized = cv2.resize(aruco_marker_img, NEW_SIZE)
+    for id_info in range(0, 20):
+        aruco_marker_img = cv2.aruco.generateImageMarker(arucoDict, id_info, MARKER_SIZE)
 
-    cv2.imshow("aruco_marker_img", aruco_marker_img_resized)
-    cv2.waitKey(0)
+        # cv2.imshow("aruco_marker_img", aruco_marker_img)
+        # cv2.waitKey(0)
+        cv2.imwrite(f"aruco_marker_{id_info}.png", aruco_marker_img)
+
