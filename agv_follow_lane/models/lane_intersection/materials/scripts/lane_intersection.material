@@ -1,0 +1,13 @@
+material LaneIntersection/Intersection
+{
+	technique
+	{
+		pass
+		{
+			texture_unit
+			{
+				texture lane_intersection.png
+			}
+		}
+	}
+}
