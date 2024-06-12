@@ -16,16 +16,23 @@ class Detection(object):
         self.dist_coeffs = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
         self.aruco_size = 0.1778 # (m)
 
-    def detectLane(self, input_image):
+    def detectLane(self, input_image, color = 'green'):
 
         # Resized Image
         resized_img = self.resize_img(input_image, self.scale_percent)
 
         # Thresholded Image
-        thresh_img = self.findThreshold(resized_img)
+        thresh_img = self.findThreshold(resized_img, color)
+
+        # Detect Intersection
+        is_intersection = self.detectIntersection(thresh_img)
 
         # Find cross track error and angle error
         cte, angle, output_image = self.calculateContours(thresh_img, resized_img)
+
+        if is_intersection:
+            cte = 0
+            angle = 0
 
         return cte, angle, output_image
 
@@ -38,25 +45,52 @@ class Detection(object):
         resized_img = resized_img[75:,:]
         return resized_img
 
-    def findThreshold(self, img):
+    def findThreshold(self, img, color):
 
-        # Convert input BGR image to HSV color space and take S-Channel (Saturation)
+        # Convert input BGR image to HSV color space
         hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-        s_channel = hsv[:,:,1]
+
+        if color == 'green':
+            # Define range for green color and threshold
+            lower_green = np.array([35, 100, 100])
+            upper_green = np.array([85, 255, 255])
+            mask = cv2.inRange(hsv, lower_green, upper_green)
+        elif color == 'red':
+            # Define range for red color and threshold
+            lower_red1 = np.array([0, 100, 100])
+            upper_red1 = np.array([10, 255, 255])
+            lower_red2 = np.array([160, 100, 100])
+            upper_red2 = np.array([180, 255, 255])
+            mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
+            mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
+            mask = cv2.bitwise_or(mask1, mask2)
 
         # Remove noise using 3x3 Kernel (Gaussian Filter)
-        blurred = cv2.GaussianBlur(s_channel, (3,3), 1)
+        blurred = cv2.GaussianBlur(mask, (3,3), 1)
 
-        # Binarize the copy image with global thresholding
+        # Binarize the image
         binarized_image = np.zeros_like(blurred)
-        binarized_image[blurred>120] =1
+        binarized_image[blurred > 0] = 1
 
         # Morphological Transformations (Erosion & Dilation)
         kernel = np.ones((3,3), dtype=np.uint8)
-        #eroded_img = cv2.erode(binarized_image, kernel)
         dilated_img = cv2.dilate(binarized_image, kernel)
 
         return dilated_img
+
+
+    def detectIntersection(self, thresh_img):
+        # Check for horizontal lines in the bottom half of the image
+        height, width = thresh_img.shape
+        bottom_half = thresh_img[height//2:, :]
+
+        # Sum the rows to find horizontal lines
+        row_sum = np.sum(bottom_half, axis=1)
+
+        # If there are multiple significant lines, it could be an intersection
+        horizontal_lines = np.sum(row_sum > width // 2)
+
+        return horizontal_lines > 1
 
     def calculateContours(self, thresh_img, original_img):
 

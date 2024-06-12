@@ -1,0 +1,45 @@
+<?xml version='1.0'?>
+<sdf version='1.5'>
+  <model name='lane_intersection'>
+
+    <link name='ground'>
+      <pose frame=''>0 0 0 0 0 0</pose>
+      <visual name='visual'>
+        <cast_shadows>false</cast_shadows>
+        <pose>0 0 0 </pose>
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>20 20</size>
+          </plane>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://lane_intersection/materials/scripts</uri>
+            <uri>model://lane_intersection/materials/textures</uri>
+            <name>LaneIntersection/Intersection</name>
+          </script>
+        </material>
+      </visual>
+      <collision name='collision'>
+        <surface>
+          <friction>
+            <ode>
+              <mu>100</mu>
+              <mu2>100</mu2>
+            </ode>
+          </friction>
+        </surface>
+        <geometry>
+          <plane>
+            <normal>0 0 1</normal>
+            <size>20 20</size>
+          </plane>
+        </geometry>
+      </collision>
+    </link>
+
+    <static>1</static>
+    <allow_auto_disable>1</allow_auto_disable>
+  </model>
+</sdf>

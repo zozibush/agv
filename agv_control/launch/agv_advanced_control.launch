@@ -20,7 +20,7 @@
   <!-- Spawn Robot -->
   <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
     <arg name="robot_name" default="$(arg robot_name1)"/>
-    <arg name="initial_pose_x" default="0"/>
+    <arg name="initial_pose_x" default="-0.5"/>
     <arg name="initial_pose_y" default="0"/>
     <arg name="initial_pose_z" default="0"/>
   </include>
@@ -32,7 +32,7 @@
     <arg name="set_scan_frame" value="$(arg robot_name1)/scan_link"/>
     <arg name="set_map_frame" value="$(arg set_map_frame)"/>
     <arg name="set_robot_name" value="$(arg robot_name1)"/>
-    <arg name="initial_pose_x" default="0.0"/>
+    <arg name="initial_pose_x" default="-0.5"/>
     <arg name="initial_pose_y" default="0.0"/>
     <arg name="initial_pose_a" default="0.0"/>
   </include>
@@ -44,7 +44,16 @@
 
   <!-- Spawn aruco -->
   <include file="$(find agv_follow_aruco)/launch/spawn_aruco.launch">
-    <arg name="marker_id" default="0"/>
+    <arg name="marker_id" default="1"/>
+    <arg name="x" value="0"/>
+    <arg name="y" value="0"/>
+    <arg name="z" value="0.01"/>
+    <arg name="R" value="0"/>
+    <arg name="P" value="0"/>
+    <arg name="Y" value="0"/>
+  </include>
+  <include file="$(find agv_follow_aruco)/launch/spawn_aruco.launch">
+    <arg name="marker_id" default="3"/>
     <arg name="x" value="3"/>
     <arg name="y" value="0"/>
     <arg name="z" value="0.01"/>
@@ -53,18 +62,18 @@
     <arg name="Y" value="0"/>
   </include>
   <include file="$(find agv_follow_aruco)/launch/spawn_aruco.launch">
-    <arg name="marker_id" default="1"/>
-    <arg name="x" value="6"/>
-    <arg name="y" value="0"/>
+    <arg name="marker_id" default="4"/>
+    <arg name="x" value="3"/>
+    <arg name="y" value="-8.8"/>
     <arg name="z" value="0.01"/>
     <arg name="R" value="0"/>
     <arg name="P" value="0"/>
     <arg name="Y" value="0"/>
   </include>
   <include file="$(find agv_follow_aruco)/launch/spawn_aruco.launch">
-    <arg name="marker_id" default="2"/>
-    <arg name="x" value="0"/>
-    <arg name="y" value="0"/>
+    <arg name="marker_id" default="6"/>
+    <arg name="x" value="7"/>
+    <arg name="y" value="-8.8"/>
     <arg name="z" value="0.01"/>
     <arg name="R" value="0"/>
     <arg name="P" value="0"/>
@@ -73,8 +82,22 @@
 
   <!-- Run Controller -->
   <group ns="$(arg robot_name1)">
-    <node pkg="agv_control" type="controller_node.py" name="controller_node" output="screen">
+    <node pkg="agv_control" type="advanced_controller_node.py" name="advanced_controller_node" output="screen">
       <param name="robot_name" value="$(arg robot_name1)"/>
+    </node>
+  </group>
+
+
+  <!-- Spawn Car -->
+  <include file="$(find agv_control)/launch/spawn_car.launch">
+    <!-- <arg name="" value=""/> -->
+  </include>
+
+  <!-- Run Object Mover -->
+  <group ns="$(arg robot_name1)">
+    <node pkg="agv_control" type="object_mover_node.py" name="mover_node" output="screen">
+      <param name="robot_name" value="$(arg robot_name1)"/>
+      <param name="model_name" value="prius_hybrid"/>
     </node>
   </group>
 
