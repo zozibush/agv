@@ -6,7 +6,7 @@ material LaneGround/Ground
 		{
 			texture_unit
 			{
-				texture lane_ground2.png
+				texture lane_ground.png
 			}
 		}
 	}
