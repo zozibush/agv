@@ -18,7 +18,7 @@ class ObjectMover:
 
     def odom_callback(self, data):
         new_state = ModelState()
-        new_state.model_name = self.model_name
+        new_state.model_name = f"{self.robot_name}_{self.model_name}"
         new_state.pose = data.pose.pose
         new_state.pose.position.z += 0.3
 
