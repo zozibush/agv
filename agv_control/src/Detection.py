@@ -25,7 +25,8 @@ class Detection(object):
         thresh_img = self.findThreshold(resized_img, color)
 
         # Detect Intersection
-        is_intersection = self.detectIntersection(thresh_img)
+        # is_intersection = self.detectIntersection(thresh_img)
+        is_intersection = self.detectIntersectionWithHoughLines(resized_img)
 
         # Find cross track error and angle error
         cte, angle, output_image = self.calculateContours(thresh_img, resized_img)
@@ -91,6 +92,29 @@ class Detection(object):
         horizontal_lines = np.sum(row_sum > width // 2)
 
         return horizontal_lines > 1
+
+    def detectIntersectionWithHoughLines(self, img):
+        gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        edges = cv2.Canny(gray, 50, 150, apertureSize=3)
+        lines = cv2.HoughLines(edges, 1, np.pi/180, 50)
+
+        if lines is None:
+            return False
+
+        angles = []
+        for line in lines:
+            rho, theta = line[0]
+            angle = theta * 180 / np.pi
+            angles.append(angle)
+
+        # Count the number of unique angles
+        unique_angles = len(set(angles))
+
+        # If there are multiple unique angles, it's likely an intersection
+        if unique_angles > 2:
+            return True
+        else:
+            return False
 
     def calculateContours(self, thresh_img, original_img):
 
