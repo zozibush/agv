@@ -10,7 +10,7 @@ class Detection(object):
         self.scale_percent = 40
 
         # ArUco info
-        self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_6X6_250)
+        self.aruco_dict = cv2.aruco.getPredefinedDictionary(cv2.aruco.DICT_4X4_50)
         self.parameters = cv2.aruco.DetectorParameters()
         self.camera_matrix = np.array([[381.36246688113556, 0, 320.5], [0, 381.36246688113556, 240.5], [0, 0, 1]])
         self.dist_coeffs = np.array([0.0, 0.0, 0.0, 0.0, 0.0])
