@@ -49,10 +49,6 @@ class ArucoMap:
         response_json = json.dumps(path)
         return JsonPathResponse(json_path=response_json)
 
-    def add_node(self):
-        for i in range(1, 33):
-            self.G.add_node(i)
-
     def add_edge_with_attributes(self, u, v, direction, lane_color, arrive=None):
         self.G.add_edge(u, v, lane_color=lane_color, direction=direction, arrive=arrive)
 
