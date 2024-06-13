@@ -6,7 +6,8 @@
     <arg name="R" default="0"/>
     <arg name="P" default="0"/>
     <arg name="Y" default="1.7"/>
+    <arg name="robot_name" default="AGV_OTH1"/>
 
     <node pkg="gazebo_ros" type="spawn_model" name="spawn_sdf" output="screen"
-        args="-file /home/$(env USER)/.gazebo/models/prius_hybrid/model.sdf -sdf -model prius_hybrid -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)" />
+        args="-file /home/$(env USER)/.gazebo/models/prius_hybrid/model.sdf -sdf -model $(arg robot_name)_prius_hybrid -x $(arg x) -y $(arg y) -z $(arg z) -R $(arg R) -P $(arg P) -Y $(arg Y)" />
 </launch>
