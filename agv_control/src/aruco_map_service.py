@@ -60,7 +60,26 @@ class ArucoMap:
             edge_data = self.G.get_edge_data(u, v)
             path[u] = [v, edge_data['lane_color'], edge_data['direction'], edge_data['arrive']]
 
+        # 경로를 이미지로 시각화
+        # self.visualize_path(shortest_path)
+
+        rospy.loginfo("Shortest path from %d to %d: %s", start_node, end_node, path)
+
         return path
+
+    def visualize_path(self, path):
+        plt.figure(figsize=(8, 6))
+        edge_labels = nx.get_edge_attributes(self.G, 'direction')
+        nx.draw(self.G, self.pos, with_labels=True, node_size=300, node_color="skyblue", font_size=10, font_weight="bold", arrowsize=10)
+        nx.draw_networkx_edge_labels(self.G, self.pos, edge_labels=edge_labels, font_color='red', font_size=10)
+
+        # 경로 강조
+        path_edges = list(zip(path, path[1:]))
+        nx.draw_networkx_edges(self.G, self.pos, edgelist=path_edges, edge_color='r', width=2)
+
+        plt.title("Shortest Path Visualization")
+        plt.show()
+
 
 if __name__ == '__main__':
     rospy.init_node('aruco_map_service', anonymous=True)
