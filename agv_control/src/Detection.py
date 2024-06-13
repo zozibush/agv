@@ -25,8 +25,8 @@ class Detection(object):
         thresh_img = self.findThreshold(resized_img, color)
 
         # Detect Intersection
-        # is_intersection = self.detectIntersection(thresh_img)
-        is_intersection = self.detectIntersectionWithHoughLines(resized_img)
+        is_intersection = self.detectIntersection(thresh_img)
+        # is_intersection = self.detectIntersectionWithHoughLines(resized_img)
 
         # Find cross track error and angle error
         cte, angle, output_image = self.calculateContours(thresh_img, resized_img)
@@ -74,24 +74,26 @@ class Detection(object):
         binarized_image[blurred > 0] = 1
 
         # Morphological Transformations (Erosion & Dilation)
-        kernel = np.ones((3,3), dtype=np.uint8)
+        kernel = np.ones((5,5), dtype=np.uint8)
         dilated_img = cv2.dilate(binarized_image, kernel)
+        eroded_img = cv2.erode(binarized_image, kernel)
 
-        return dilated_img
+
+        return eroded_img
 
 
     def detectIntersection(self, thresh_img):
-        # Check for horizontal lines in the bottom half of the image
-        height, width = thresh_img.shape
-        bottom_half = thresh_img[height//2:, :]
-
-        # Sum the rows to find horizontal lines
-        row_sum = np.sum(bottom_half, axis=1)
-
-        # If there are multiple significant lines, it could be an intersection
-        horizontal_lines = np.sum(row_sum > width // 2)
-
-        return horizontal_lines > 1
+        # Find contours in the thresholded image
+        contours, _ = cv2.findContours(thresh_img, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        for contour in contours:
+            area = cv2.contourArea(contour)
+            x, y, w, h = cv2.boundingRect(contour)
+            aspect_ratio = w / h
+            if area > 3000 and aspect_ratio > 1.2 and x < thresh_img.shape[1] // 3 and x + w > thresh_img.shape[1] * 2 // 3:
+                # Assume intersection if a large enough contour with wide aspect ratio is found in the center
+                print("Intersection Detected")
+                return True
+        return False
 
     def detectIntersectionWithHoughLines(self, img):
         gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
@@ -110,8 +112,14 @@ class Detection(object):
         # Count the number of unique angles
         unique_angles = len(set(angles))
 
-        # If there are multiple unique angles, it's likely an intersection
-        if unique_angles > 2:
+        # Define angle tolerance for straight lines
+        angle_tolerance = 40  # degrees
+
+        # Filter lines that are within the tolerance for being straight
+        straight_lines = [angle for angle in angles if (angle < angle_tolerance or angle > (180 - angle_tolerance))]
+
+        # If there are multiple unique angles excluding straight lines, it's likely an intersection
+        if unique_angles > 2 and len(straight_lines) < unique_angles - 1:
             return True
         else:
             return False
