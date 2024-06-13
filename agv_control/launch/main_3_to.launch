@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+
+<launch>
+  <env name="GAZEBO_MODEL_PATH" value="$(find agv_follow_lane)/models:$(find aruco_gazebo):$(optenv GAZEBO_MODEL_PATH)" />
+
+  <arg name="set_map_frame" default="map"/>
+  <arg name="robot_name1" default="AGV_OTA1"/>
+
+  <!-- Run Gazebo -->
+  <include file="$(find automobile_manufacturing)/launch/automobile_factory_object.launch" />
+
+  <!-- Run the map server -->
+  <arg name="map_file" default="$(find agv_follow_lane)/map/lane_ground2.yaml"/>
+  <node name="map_server" pkg="map_server" type="map_server" args="$(arg map_file)">
+    <param name="frame_id" value="$(arg set_map_frame)"/>
+  </node>
+
+  <!-- Spawn Robot -->
+  <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
+    <arg name="robot_name" default="$(arg robot_name1)"/>
+    <arg name="initial_pose_x" default="55"/>
+    <!-- <arg name="initial_pose_x" default="32"/> -->
+    <arg name="initial_pose_y" default="10"/>
+    <arg name="initial_pose_z" default="0.5"/>
+  </include>
+
+  <!-- Run AMCL -->
+  <include file="$(find agv_launch)/launch/single_amcl.launch">
+    <arg name="set_base_frame" value="$(arg robot_name1)/base_footprint"/>
+    <arg name="set_odom_frame" value="$(arg robot_name1)/odom"/>
+    <arg name="set_scan_frame" value="$(arg robot_name1)/scan_link"/>
+    <arg name="set_map_frame" value="$(arg set_map_frame)"/>
+    <arg name="set_robot_name" value="$(arg robot_name1)"/>
+    <arg name="initial_pose_x" default="55"/>
+    <arg name="initial_pose_y" default="10"/>
+    <arg name="initial_pose_a" default="0.5"/>
+  </include>
+
+  <!-- Run rviz -->
+  <!-- <include file="$(find agv_launch)/launch/run_rviz.launch">
+    <arg name="rviz" default="$(find agv_simulation)/rviz/urdf.rviz"/>
+  </include> -->
+
+  <!-- Run Controller -->
+  <group ns="$(arg robot_name1)">
+    <node pkg="agv_control" type="advanced_controller_node.py" name="advanced_controller_node" output="screen"
+      args="$(arg robot_name1) 3 east"/>
+  </group>
+
+  <!-- Spawn Car -->
+  <include file="$(find agv_control)/launch/spawn_car.launch">
+    <arg name="x" value="55"/>
+    <arg name="y" value="10"/>
+    <arg name="z" value="3"/>
+    <arg name="robot_name" value="$(arg robot_name1)"/>
+  </include>
+
+  <!-- Run Object Mover -->
+  <arg name="model_name" default="prius_hybrid"/>
+  <group ns="$(arg robot_name1)">
+    <node pkg="agv_control" type="object_mover_node.py" name="mover_node" output="screen"
+      args="$(arg robot_name1) $(arg model_name)" />
+  </group>
+
+  <!-- Run Aruco Map Service -->
+  <node pkg="agv_control" type="aruco_map_service.py" name="aruco_map_service" output="screen"
+    args="$(find agv_control)/src/aruco_map.yaml" />
+
+</launch>
