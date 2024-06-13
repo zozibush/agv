@@ -52,14 +52,14 @@ class Detection(object):
 
         if color == 'green':
             # Define range for green color and threshold
-            lower_green = np.array([35, 100, 100])
-            upper_green = np.array([85, 255, 255])
+            lower_green = np.array([40, 50, 50])
+            upper_green = np.array([80, 255, 255])
             mask = cv2.inRange(hsv, lower_green, upper_green)
         elif color == 'red':
             # Define range for red color and threshold
-            lower_red1 = np.array([0, 100, 100])
+            lower_red1 = np.array([0, 70, 50])
             upper_red1 = np.array([10, 255, 255])
-            lower_red2 = np.array([160, 100, 100])
+            lower_red2 = np.array([170, 70, 50])
             upper_red2 = np.array([180, 255, 255])
             mask1 = cv2.inRange(hsv, lower_red1, upper_red1)
             mask2 = cv2.inRange(hsv, lower_red2, upper_red2)
