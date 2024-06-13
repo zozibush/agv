@@ -222,8 +222,8 @@ class AGVAdvancedController:
 
         if self.detection.draw_img:
             cv2.putText(final_img, f"distance: {self.pid_aruco_x.last_error:.3f}", (10,20), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0,0,255), 1)
-            cv2.putText(final_img, f"cmd: ({cmd_vel.linear.x:.3f},{cmd_vel.angular.z:.3f})", (10,40), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0,0,255), 1)
-            cv2.putText(final_img, f"type: {self.type}, marker_id: {next_aruco_id}", (10,60), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0,0,255), 1)
+            cv2.putText(final_img, f"cmd: ({cmd_vel.linear.x:.3f},{cmd_vel.angular.z:.10f})", (10,40), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0,0,255), 1)
+            cv2.putText(final_img, f"type: {self.type}, aruco: {next_aruco_id}", (10,60), cv2.FONT_HERSHEY_SIMPLEX, 0.4, (0,0,255), 1)
             cv2.imshow("Original Image", final_img)
             cv2.waitKey(1)
         self.cmd_vel_pub.publish(cmd_vel)
