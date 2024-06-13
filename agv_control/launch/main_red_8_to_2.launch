@@ -18,9 +18,10 @@
   <!-- Spawn Robot -->
   <include file="$(find agv_launch)/launch/single_agv_spawn.launch">
     <arg name="robot_name" default="$(arg robot_name1)"/>
-    <arg name="initial_pose_x" default="55"/>
-    <arg name="initial_pose_y" default="10"/>
+    <arg name="initial_pose_x" default="60"/>
+    <arg name="initial_pose_y" default="30"/>
     <arg name="initial_pose_z" default="0.5"/>
+    <arg name="initial_pose_Y" default="3.14"/>
   </include>
 
   <!-- Run AMCL -->
@@ -30,8 +31,7 @@
     <arg name="set_scan_frame" value="$(arg robot_name1)/scan_link"/>
     <arg name="set_map_frame" value="$(arg set_map_frame)"/>
     <arg name="set_robot_name" value="$(arg robot_name1)"/>
-
-    <arg name="initial_pose_x" default="32"/>
+    <arg name="initial_pose_x" default="55"/>
     <arg name="initial_pose_y" default="10"/>
     <arg name="initial_pose_a" default="0.5"/>
   </include>
@@ -44,7 +44,7 @@
   <!-- Run Controller -->
   <group ns="$(arg robot_name1)">
     <node pkg="agv_control" type="advanced_controller_node.py" name="advanced_controller_node" output="screen"
-      args="$(arg robot_name1) 3 east"/>
+      args="$(arg robot_name1) 8 west"/>
   </group>
 
   <!-- Spawn Car -->
@@ -65,4 +65,5 @@
   <!-- Run Aruco Map Service -->
   <node pkg="agv_control" type="aruco_map_service.py" name="aruco_map_service" output="screen"
     args="$(find agv_control)/src/aruco_map.yaml" />
+
 </launch>

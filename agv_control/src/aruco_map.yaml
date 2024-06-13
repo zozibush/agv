@@ -1,0 +1,268 @@
+nodes:
+  - id: 1
+    pos: [1, 1]
+    edges:
+      - target: 3
+        direction: "east"
+        lane_color: "green"
+  - id: 2
+    pos: [1, 2]
+    edges:
+      - target: 4
+        direction: "east"
+        lane_color: "green"
+  - id: 3
+    pos: [2, 1]
+    edges:
+      - target: 6
+        direction: "east"
+        lane_color: "green"
+  - id: 4
+    pos: [2, 2]
+    edges:
+      - target: 7
+        direction: "east"
+        lane_color: "green"
+  - id: 5
+    pos: [2, 3]
+    edges:
+      - target: 2
+        direction: "west"
+        lane_color: "red"
+        arrive: "east"
+  - id: 6
+    pos: [3, 1]
+    edges:
+      - target: 7
+        direction: "north"
+        lane_color: "green"
+      - target: 9
+        direction: "east"
+        lane_color: "green"
+  - id: 7
+    pos: [3, 2]
+    edges:
+      - target: 6
+        direction: "south"
+        lane_color: "green"
+      - target: 8
+        direction: "north"
+        lane_color: "green"
+      - target: 10
+        direction: "east"
+        lane_color: "green"
+  - id: 8
+    pos: [3, 3]
+    edges:
+      - target: 5
+        direction: "west"
+        lane_color: "red"
+      - target: 11
+        direction: "east"
+        lane_color: "green"
+  - id: 9
+    pos: [4, 1]
+    edges:
+      - target: 12
+        direction: "east"
+        lane_color: "green"
+  - id: 10
+    pos: [4, 2]
+    edges:
+      - target: 13
+        direction: "east"
+        lane_color: "green"
+  - id: 11
+    pos: [4, 3]
+    edges:
+      - target: 14
+        direction: "east"
+        lane_color: "green"
+  - id: 12
+    pos: [5, 1]
+    edges:
+      - target: 13
+        direction: "north"
+        lane_color: "green"
+      - target: 15
+        direction: "east"
+        lane_color: "green"
+  - id: 13
+    pos: [5, 2]
+    edges:
+      - target: 12
+        direction: "south"
+        lane_color: "green"
+      - target: 14
+        direction: "north"
+        lane_color: "green"
+      - target: 16
+        direction: "east"
+        lane_color: "green"
+  - id: 14
+    pos: [5, 3]
+    edges:
+      - target: 13
+        direction: "south"
+        lane_color: "green"
+      - target: 17
+        direction: "east"
+        lane_color: "green"
+  - id: 15
+    pos: [6, 1]
+    edges:
+      - target: 18
+        direction: "east"
+        lane_color: "green"
+  - id: 16
+    pos: [6, 2]
+    edges:
+      - target: 19
+        direction: "east"
+        lane_color: "green"
+  - id: 17
+    pos: [6, 3]
+    edges:
+      - target: 20
+        direction: "east"
+        lane_color: "green"
+  - id: 18
+    pos: [7, 1]
+    edges:
+      - target: 19
+        direction: "north"
+        lane_color: "green"
+      - target: 21
+        direction: "east"
+        lane_color: "red"
+  - id: 19
+    pos: [7, 2]
+    edges:
+      - target: 18
+        direction: "south"
+        lane_color: "green"
+      - target: 20
+        direction: "north"
+        lane_color: "green"
+      - target: 23
+        direction: "east"
+        lane_color: "green"
+        arrive: "west"
+  - id: 20
+    pos: [7, 3]
+    edges:
+      - target: 19
+        direction: "south"
+        lane_color: "green"
+      - target: 22
+        direction: "east"
+        lane_color: "green"
+        arrive: "west"
+  - id: 21
+    pos: [8, 1]
+    edges:
+      - target: 18
+        direction: "west"
+        lane_color: "red"
+  - id: 22
+    pos: [7, 6]
+    edges:
+      - target: 24
+        direction: "west"
+        lane_color: "green"
+  - id: 23
+    pos: [7, 7]
+    edges:
+      - target: 25
+        direction: "west"
+        lane_color: "green"
+  - id: 24
+    pos: [6, 6]
+    edges:
+      - target: 26
+        direction: "west"
+        lane_color: "green"
+  - id: 25
+    pos: [6, 7]
+    edges:
+      - target: 27
+        direction: "west"
+        lane_color: "green"
+  - id: 26
+    pos: [5, 6]
+    edges:
+      - target: 27
+        direction: "north"
+        lane_color: "green"
+      - target: 28
+        direction: "south"
+        lane_color: "red"
+  - id: 27
+    pos: [5, 7]
+    edges:
+      - target: 26
+        direction: "south"
+        lane_color: "green"
+      - target: 29
+        direction: "west"
+        lane_color: "green"
+  - id: 28
+    pos: [5, 5]
+    edges:
+      - target: 26
+        direction: "north"
+        lane_color: "green"
+  - id: 29
+    pos: [4, 7]
+    edges:
+      - target: 30
+        direction: "west"
+        lane_color: "green"
+  - id: 30
+    pos: [3, 7]
+    edges:
+      - target: 31
+        direction: "west"
+        lane_color: "green"
+  - id: 31
+    pos: [2, 7]
+    edges:
+      - target: 2
+        direction: "south"
+        lane_color: "green"
+        arrive: "east"
+      - target: 32
+        direction: "west"
+        lane_color: "green"
+      - target: 33
+        direction: "south"
+        lane_color: "red"
+        arrive: "east"
+  - id: 32
+    pos: [1, 7]
+    edges:
+      - target: 1
+        direction: "west"
+        lane_color: "green"
+        arrive: "east"
+      - target: 34
+        direction: "west"
+        lane_color: "red"
+        arrive: "east"
+  - id: 33
+    pos: [4, 6]
+    edges:
+      - target: 31
+        direction: "west"
+        lane_color: "red"
+        arrive: "north"
+  - id: 34
+    pos: [4, 5]
+    edges:
+      - target: 32
+        direction: "west"
+        lane_color: "red"
+        arrive: "east"
+
+
+
