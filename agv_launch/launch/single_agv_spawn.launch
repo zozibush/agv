@@ -4,6 +4,9 @@
     <arg name="initial_pose_x" default="0"/>
     <arg name="initial_pose_y" default="0"/>
     <arg name="initial_pose_z" default="0"/>
+    <arg name="initial_pose_R" default="0"/>
+    <arg name="initial_pose_P" default="0"/>
+    <arg name="initial_pose_Y" default="0"/>
 
 	<group ns="$(arg robot_name)">
 		<param name="robot_description" command="$(find xacro)/xacro '$(find agv_description)/urdf/agv.urdf.xacro'" />
@@ -15,7 +18,7 @@
 		<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher"/>
 		<param name="tf_prefix" value="$(arg robot_name)" />
 		<node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" output="screen"
-			 args="-urdf -model $(arg robot_name) -x $(arg initial_pose_x) -y $(arg initial_pose_y) -z $(arg initial_pose_z) -param robot_description">
+			 args="-urdf -model $(arg robot_name) -x $(arg initial_pose_x) -y $(arg initial_pose_y) -z $(arg initial_pose_z) -R $(arg initial_pose_R) -P $(arg initial_pose_P) -Y $(arg initial_pose_Y) -param robot_description">
 		</node>
   	</group>
 </launch>
